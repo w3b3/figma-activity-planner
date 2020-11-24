@@ -1,18 +1,19 @@
 .App {
-  background-color: hotpink;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  background-color: #333;
+  color: floralwhite;
 }
 
 .App-header {
   min-height: 10vh;
-  background-color: navajowhite;
 }
+
 .App-main {
   flex: 1;
-  background-color: navy;
 }
+
 .App-footer {
   min-height: 5%;
-  background-color: crimson;
 }
