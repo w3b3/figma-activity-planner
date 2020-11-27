@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { MyContext } from "../App";
 import { Component as CardDetails } from "./CardDetails";
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Component as Header } from "./components/Header";
 import { Component as CardsGrid } from "./components/CardsGrid";
@@ -17,12 +17,8 @@ MyContext.displayName = "MyAppState";
 function App() {
   const [selectedCard, setSelectedCard] = useState<string>("");
   const handleContextUpdate = (id: string) => {
-    // console.log(`Card ${id} was selected`);
     setSelectedCard(id);
   };
-  // useEffect(() => {
-  //   console.log(selectedCard);
-  // }, [selectedCard]);
   return (
     <MyContext.Provider
       value={{
