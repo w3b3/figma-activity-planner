@@ -11,6 +11,7 @@ const Article = styled.article`
   align-items: center;
   // Other
   cursor: pointer;
+  border-bottom: 2px dashed #444;
   ${(props: { pinned?: boolean }) =>
     // props.pinned &&
     // css`
@@ -18,8 +19,19 @@ const Article = styled.article`
     // `}
     css`
       ${props.pinned
-        ? "box-shadow: inset 0 0 8px crimson"
-        : "box-shadow: inset 0 0 8px white"}
+        ? "border-left: 5px solid crimson"
+        : "border-left: 5px solid #222"}
+    `}
+`;
+
+const CardTitle = styled.h2`
+  ${(props: { pinned?: boolean }) =>
+    // props.pinned &&
+    // css`
+    //   border: 1px solid crimson;
+    // `}
+    css`
+      ${props.pinned && "text-decoration: 5px underline crimson"}
     `}
 `;
 
@@ -32,7 +44,7 @@ export const Component = ({ card }: { card: Card }) => {
           pinned={card.meta.pinned}
           onClick={() => updateSelectedCard(card.id)}
         >
-          <h2 className="Card-title">{card.title}</h2>
+          <CardTitle pinned={card.meta.pinned}>{card.title}</CardTitle>
           <span className="Card-metric">
             <span>{card.date.day} </span>days
           </span>
