@@ -2,26 +2,29 @@ import React from "react";
 import styled from "styled-components";
 import { Card } from "../types";
 
-export const Component = ({ card }: { card: Card }) => {
-  const CardRoot = styled.section`
-    // Layout
-    display: flex;
-    flex-direction: column;
-    // Other
-    border: 5px solid black;
-  `;
+const CardDetailsRoot = styled.section`
+  // Layout
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // Other
+  border: 5px solid #111;
+  background-color: #222;
+`;
 
-  const BottomHalf = styled.div`
-    display: flex;
-  `;
-  const ButtonRow = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  `;
+const BottomHalf = styled.div`
+  display: flex;
+`;
+const ButtonRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+`;
+
+export const Component = ({ card }: { card: Card }) => {
   return (
-    <CardRoot>
-      {/* <h2>another set of deadlifts</h2> */}
+    <CardDetailsRoot>
       <h2>{card.title}</h2>
       <BottomHalf>
         <p>{card.description.text}</p>
@@ -30,10 +33,6 @@ export const Component = ({ card }: { card: Card }) => {
           <button>Postpone</button>
         </ButtonRow>
       </BottomHalf>
-      {/* <p>
-                  Goal is to complete each set every 3 days. Current set is
-                  around 8x with 30lbs. Note that I can...
-                </p> */}
-    </CardRoot>
+    </CardDetailsRoot>
   );
 };
