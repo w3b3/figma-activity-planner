@@ -3,19 +3,15 @@ import "./App.css";
 import { Component as Header } from "./components/Header";
 import { Component as CardsGrid } from "./components/CardsGrid";
 import { Component as Footer } from "./components/Footer";
+import { Component as CardDetailsWrapper } from "./components/CardDetailsWrapper";
+
 import { userData } from "./mock-initial-state";
 import { v4 as uuid } from "uuid";
-import * as firebase from "firebase/app";
-// import * as firebase from "firebase";
+import firebase from "firebase";
 import "firebase/firestore";
-import { UserData } from "./types";
 
-// import {
-//   FirebaseAppProvider,
-//   useFirestoreDocData,
-//   useFirestore,
-//   SuspenseWithPerf,
-// } from "reactfire";
+// import "firebase/database";
+import { UserData } from "./types";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -33,24 +29,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 // Firebase previously initialized using firebase.initializeApp().
 const db: any = firebase.firestore();
+// const db: any = firebase.database();
 // eslint-disable-next-line no-restricted-globals
 if (location.hostname === "localhost") {
   db.useEmulator("localhost", 8080);
 }
-
-// const UserName = () => {
-// easily access the Firestore library
-// const userRef = useFirestore().collection("todo").doc("burrito");
-// console.log(userRef);
-// subscribe to a document for realtime updates. just one line!
-// const { status, data } = useFirestoreDocData<any>(userRef);
-// easily check the loading status
-// console.log(status, data);
-// if (status === "loading") {
-// return <p>Fetching burrito...</p>;
-// }
-// return <p>The burrito is {data?.yummy ? "good" : "bad"}!</p>;
-// };
 
 export const MyContext = React.createContext({
   userData,
@@ -100,19 +83,12 @@ function App() {
       }}
     >
       {/* Providers can be nested to override values deeper within the tree. */}
-      {/* <FirebaseAppProvider firebaseConfig={firebaseConfig}> */}
       <div className="App">
-        {/* <SuspenseWithPerf
-            fallback={<p>loading burrito status...</p>}
-            traceId={"load-burrito-status"}
-          > */}
-        {/* <UserName /> */}
-        {/* </SuspenseWithPerf> */}
         <Header name="Card" />
         <CardsGrid />
+        <CardDetailsWrapper />
         <Footer />
       </div>
-      {/* </FirebaseAppProvider> */}
     </MyContext.Provider>
   );
 }
