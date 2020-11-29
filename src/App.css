@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #333;
   color: floralwhite;
+  width: min(100%, 800px);
+  margin: auto;
 }
 
 .App-header {
@@ -16,4 +17,29 @@
 
 .App-footer {
   min-height: 5%;
+}
+
+/* BUTTON SHOULD BE A SHARED COMPONENT */
+button {
+  min-width: min(100px, 20%);
+  line-height: 1.5rem;
+  /* padding: 2px; */
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  border: 1px solid ghostwhite;
+  border-radius: 4px;
+  color: ghostwhite;
+}
+
+button > span {
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+button:hover,
+buttpn:active {
+  background-color: crimson;
 }

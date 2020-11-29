@@ -9,20 +9,30 @@ const Article = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   // Other
   cursor: pointer;
-  border-bottom: 2px dashed #444;
+  border-left: 5px solid #222;
+  border-right: 5px solid #222;
+  border-bottom: 1px dashed #444;
+
+  &:hover,
+  &:active {
+    background-color: #222;
+    border-right: 5px solid #007fff;
+  }
+
   ${(props: { pinned?: boolean }) =>
-    // props.pinned &&
-    // css`
-    //   border: 1px solid crimson;
-    // `}
+    props.pinned &&
     css`
-      ${props.pinned
-        ? "border-left: 5px solid crimson"
-        : "border-left: 5px solid #222"}
+      border-left: 5px solid crimson;
     `}
 `;
+
+// ${props.pinned
+// ? "border-left: 5px solid crimson"
+// : "border-left: 5px solid #222"}
+/* )} */
 
 const CardTitle = styled.h2`
   ${(props: { pinned?: boolean }) =>
@@ -35,6 +45,13 @@ const CardTitle = styled.h2`
     `}
 `;
 
+const FullWidthWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
 export const Component = ({ card }: { card: Card }) => {
   return (
     <MyContext.Consumer>
@@ -45,9 +62,14 @@ export const Component = ({ card }: { card: Card }) => {
           onClick={() => updateSelectedCard(card.id)}
         >
           <CardTitle pinned={card.meta.pinned}>{card.title}</CardTitle>
-          <span className="Card-metric">
-            <span>{card.date.day} </span>days
-          </span>
+          <FullWidthWrapper>
+            <span className="Card-metric">
+              <span>{card.date.day} </span>days
+            </span>
+            <button>
+              <span>I did it!</span>
+            </button>
+          </FullWidthWrapper>
         </Article>
       )}
     </MyContext.Consumer>

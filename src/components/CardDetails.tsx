@@ -29,8 +29,15 @@ export const Component = ({ card }: { card: Card }) => {
       <BottomHalf>
         <p>{card.description.text}</p>
         <ButtonRow>
-          <button>I did it!</button>
-          <button>Postpone</button>
+          <button>
+            <span>Postpone</span>
+          </button>
+          <button>
+            <span>Edit</span>
+          </button>
+          <button>
+            <span>Delete</span>
+          </button>
         </ButtonRow>
       </BottomHalf>
     </CardDetailsRoot>
