@@ -13,6 +13,8 @@
 
 .App-main {
   flex: 1;
+  border: 1px solid #222;
+  box-shadow: 0 0 2px 0 #4d5052;
 }
 
 .App-footer {
