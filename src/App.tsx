@@ -44,9 +44,10 @@ MyContext.displayName = "MyAppState";
 
 function App() {
   const [selectedCard, setSelectedCard] = useState<string>("");
-  const [userData, setUserData] = useState<UserData>(mockUserData);
+  const [userData] = useState<UserData>(mockUserData); //TEMP: re-add setter
   const [firebaseToken, setFirebaseToken] = useState<string>("");
   const [firebaseUser, setFirebaseUser] = useState<any>(null);
+  console.info(firebaseToken); //TEMP: Just to remove warning
   const handleContextUpdate = (id: string) => {
     setSelectedCard(id);
   };
