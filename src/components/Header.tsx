@@ -8,17 +8,22 @@ const Header = styled.header`
   background-color: #111;
   box-shadow: 0px 0px 6px black;
   padding: 1rem;
+  font-size: 0.5rem;
 `;
 
 const SignedUser = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.75rem;
   img {
     max-height: 2rem;
     border-radius: 50%;
     margin-left: 4px;
     box-shadow: 0 0 0 2px white;
+  }
+  span {
+    margin-top: 6px;
   }
 `;
 export const Component = ({

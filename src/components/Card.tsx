@@ -10,6 +10,7 @@ const Article = styled.article`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  padding: 0.5rem;
   // Other
   cursor: pointer;
   border-left: 5px solid #222;
@@ -35,13 +36,16 @@ const Article = styled.article`
 /* )} */
 
 const CardTitle = styled.h2`
+  margin-bottom: 1rem;
   ${(props: { pinned?: boolean }) =>
     // props.pinned &&
     // css`
     //   border: 1px solid crimson;
     // `}
     css`
-      ${props.pinned && "text-decoration: 5px underline crimson"}
+      ${props.pinned
+        ? "text-decoration: 5px underline crimson"
+        : "text-decoration: 5px underline #444"}
     `}
 `;
 

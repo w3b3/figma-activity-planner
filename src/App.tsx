@@ -6,7 +6,7 @@ import { Component as Footer } from "./components/Footer";
 import { Component as CardDetailsWrapper } from "./components/CardDetailsWrapper";
 
 import { userData as mockUserData } from "./mock-initial-state";
-import { v4 as uuid } from "uuid";
+// import { v4 as uuid } from "uuid";
 import firebase from "firebase";
 import "firebase/firestore";
 import { UserData } from "./types";
@@ -45,9 +45,8 @@ MyContext.displayName = "MyAppState";
 function App() {
   const [selectedCard, setSelectedCard] = useState<string>("");
   const [userData] = useState<UserData>(mockUserData); //TEMP: re-add setter
-  const [firebaseToken, setFirebaseToken] = useState<string>("");
+  // const [firebaseToken, setFirebaseToken] = useState<string>("");
   const [firebaseUser, setFirebaseUser] = useState<any>(null);
-  console.info(firebaseToken); //TEMP: Just to remove warning
   const handleContextUpdate = (id: string) => {
     setSelectedCard(id);
   };
@@ -60,7 +59,7 @@ function App() {
         .signInWithPopup(provider)
         .then(function (result: any) {
           // This gives you a Google Access Token. You can use it to access the Google API.
-          setFirebaseToken(result.credential.accessToken);
+          // setFirebaseToken(result.credential.accessToken);
           // The signed-in user info.
           setFirebaseUser(result.user);
         });
@@ -77,18 +76,22 @@ function App() {
     }
   };
   // Does this MUST be async?
-  const SaveMockDataToFirestore = () => {
+  const SaveUserDataToFirestore = (user: {
+    name: string;
+    email: string;
+    id: string;
+  }) => {
     // TEMP: ADD A NEW USERS ON COMPONENT LOAD
     // STEP 1 -  CREATE THE USER INPUT
     const userData: UserData = {
       user: {
-        name: "Ada Lovelace",
-        email: "ada@love.lace",
-        id: uuid(),
+        name: user.name,
+        email: user.email,
+        id: user.id,
       },
       cards: [],
       meta: {
-        authenticated: false,
+        authenticated: true,
         lastLogin: Date.now().toString(),
       },
     };
@@ -113,14 +116,30 @@ function App() {
         });
       });
   };
+
+  // const FindRegisteredUserFirestore = (id: string) => {
+  //   db.collection("todos")
+  //     .get()
+  //     .then((querySnapshot: any) => {
+  //       querySnapshot.find((doc: any) => {
+  //         console.log(doc.id, doc.data());
+  //       });
+  //     });
+  // };
+
   useEffect(() => {
     console.log("initial rendering");
     // SaveMockDataToFirestore();
     // Auth with Google
-    firebase.auth().onAuthStateChanged(function (user) {
+    firebase.auth().onAuthStateChanged((user: any) => {
       if (user) {
         // User is signed in.
-        console.log("USER SIGNED IN", user.uid);
+        console.log("USER response", user);
+        SaveUserDataToFirestore({
+          name: user.displayName,
+          email: user.email,
+          id: user.uid,
+        });
         setFirebaseUser(user);
       }
     });
@@ -142,9 +161,9 @@ function App() {
         <button onClick={RetrieveMockDataFromFirestore}>
           <span>Read from Firestore</span>
         </button>
-        <button onClick={SaveMockDataToFirestore}>
-          <span>Save to Firestore</span>
-        </button>
+        {/* <button onClick={SaveMockDataToFirestore}> */}
+        {/* <span>Save to Firestore</span> */}
+        {/* </button> */}
       </div>
     </MyContext.Provider>
   );
