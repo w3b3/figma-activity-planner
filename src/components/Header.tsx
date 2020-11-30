@@ -1,24 +1,53 @@
 import React from "react";
-import { MyContext } from "../App";
-import { Component as CardDetails } from "./CardDetails";
+import styled from "styled-components";
 
-export const Component = ({ name }: { name?: string }) => {
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #111;
+  box-shadow: 0px 0px 6px black;
+  padding: 1rem;
+  font-size: 0.5rem;
+`;
+
+const SignedUser = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  img {
+    max-height: 2rem;
+    border-radius: 50%;
+    margin-left: 4px;
+    box-shadow: 0 0 0 2px white;
+  }
+  span {
+    margin-top: 6px;
+  }
+`;
+export const Component = ({
+  user,
+  handleAuthentication,
+}: {
+  user: any;
+  handleAuthentication: () => void;
+}) => {
   return (
-    <MyContext.Consumer>
-      {({ selectedCard, userData }) => (
-        <header>
-          <h1>Activity tracker</h1>
-          <section>
-            <button>Login</button>
-          </section>
-          {/* CARD DETAIL */}
-          {userData.cards
-            .filter((card) => card.id === selectedCard)
-            .map((card) => (
-              <CardDetails key={card.id} card={card} />
-            ))}
-        </header>
+    <Header>
+      <h1>Activity tracker</h1>
+      {user ? (
+        <SignedUser>
+          <span>{user.email}</span>
+          <img src={user.photoURL} alt="User Signed In" />
+        </SignedUser>
+      ) : (
+        <section id="firebaseui-auth-container">
+          <button onClick={handleAuthentication}>
+            <span>Login</span>
+          </button>
+        </section>
       )}
-    </MyContext.Consumer>
+    </Header>
   );
 };

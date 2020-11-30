@@ -9,9 +9,34 @@ const Article = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
+  padding: 0.5rem;
   // Other
   cursor: pointer;
-  border-bottom: 2px dashed #444;
+  border-left: 5px solid #222;
+  border-right: 5px solid #222;
+  border-bottom: 1px dashed #444;
+
+  &:hover,
+  &:active {
+    background-color: #222;
+    border-right: 5px solid #007fff;
+  }
+
+  ${(props: { pinned?: boolean }) =>
+    props.pinned &&
+    css`
+      border-left: 5px solid crimson;
+    `}
+`;
+
+// ${props.pinned
+// ? "border-left: 5px solid crimson"
+// : "border-left: 5px solid #222"}
+/* )} */
+
+const CardTitle = styled.h2`
+  margin-bottom: 1rem;
   ${(props: { pinned?: boolean }) =>
     // props.pinned &&
     // css`
@@ -19,20 +44,16 @@ const Article = styled.article`
     // `}
     css`
       ${props.pinned
-        ? "border-left: 5px solid crimson"
-        : "border-left: 5px solid #222"}
+        ? "text-decoration: 5px underline crimson"
+        : "text-decoration: 5px underline #444"}
     `}
 `;
 
-const CardTitle = styled.h2`
-  ${(props: { pinned?: boolean }) =>
-    // props.pinned &&
-    // css`
-    //   border: 1px solid crimson;
-    // `}
-    css`
-      ${props.pinned && "text-decoration: 5px underline crimson"}
-    `}
+const FullWidthWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
 export const Component = ({ card }: { card: Card }) => {
@@ -45,9 +66,20 @@ export const Component = ({ card }: { card: Card }) => {
           onClick={() => updateSelectedCard(card.id)}
         >
           <CardTitle pinned={card.meta.pinned}>{card.title}</CardTitle>
-          <span className="Card-metric">
-            <span>{card.date.day} </span>days
-          </span>
+          <FullWidthWrapper>
+            <span className="Card-metric">
+              <span>{card.date.day} </span>days
+            </span>
+            <button className="primary">
+              <span>I did it!</span>
+            </button>
+            <button
+              onClick={() => console.log("Toogle Pinned State for ", card.id)}
+              disabled={card.meta.pinned}
+            >
+              <span>{card.meta.pinned ? "Pinned" : "Pin this"}</span>
+            </button>
+          </FullWidthWrapper>
         </Article>
       )}
     </MyContext.Consumer>

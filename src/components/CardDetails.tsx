@@ -8,8 +8,9 @@ const CardDetailsRoot = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
   // Other
-  border: 5px solid #111;
+  /* border: 5px solid #444; */
   background-color: #222;
 `;
 
@@ -29,8 +30,15 @@ export const Component = ({ card }: { card: Card }) => {
       <BottomHalf>
         <p>{card.description.text}</p>
         <ButtonRow>
-          <button>I did it!</button>
-          <button>Postpone</button>
+          <button>
+            <span>Postpone</span>
+          </button>
+          <button>
+            <span>Edit</span>
+          </button>
+          <button>
+            <span>Delete</span>
+          </button>
         </ButtonRow>
       </BottomHalf>
     </CardDetailsRoot>

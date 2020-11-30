@@ -1,13 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Varta:wght@300&display=swap");
 * {
   box-sizing: border-box;
-  font-size: 18px;
   font-weight: 300;
   font-family: "Varta", sans-serif;
+
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
 }
 
 body {
+  font-size: 18px;
   margin: 0;
+  background-color: #333;
 }
 h1,
 h2,
@@ -15,6 +20,7 @@ h3,
 h4,
 h5,
 h6 {
+  margin: 0;
   font-family: "Roboto Slab", serif;
   font-weight: 700;
   text-decoration: underline;

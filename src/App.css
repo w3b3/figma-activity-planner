@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #333;
   color: floralwhite;
+  width: min(100%, 800px);
+  margin: auto;
 }
 
 .App-header {
@@ -12,8 +13,46 @@
 
 .App-main {
   flex: 1;
+  border: 1px solid #222;
+  box-shadow: 0 0 2px 0 #4d5052;
 }
 
 .App-footer {
   min-height: 5%;
+}
+
+.primary {
+  background-color: rgba(220, 20, 60, 0.2);
+}
+
+/* BUTTON SHOULD BE A SHARED COMPONENT */
+button {
+  min-width: min(100px, 20%);
+  line-height: 1.5rem;
+  /* padding: 2px; */
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  border: 1px solid ghostwhite;
+  border-radius: 4px;
+  color: ghostwhite;
+}
+
+button[disabled] {
+  background-color: transparent;
+  border-color: gray;
+  color: gray;
+  cursor: crosshair;
+}
+
+button > span {
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+button:not([disabled]):hover,
+button:not([disabled]):active {
+  background-color: crimson;
 }
