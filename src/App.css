@@ -19,6 +19,10 @@
   min-height: 5%;
 }
 
+.primary {
+  background-color: rgba(220, 20, 60, 0.2);
+}
+
 /* BUTTON SHOULD BE A SHARED COMPONENT */
 button {
   min-width: min(100px, 20%);
@@ -34,12 +38,19 @@ button {
   color: ghostwhite;
 }
 
+button[disabled] {
+  background-color: transparent;
+  border-color: gray;
+  color: gray;
+  cursor: crosshair;
+}
+
 button > span {
   font-size: 0.8rem;
   margin-top: 4px;
 }
 
-button:hover,
-buttpn:active {
+button:not([disabled]):hover,
+button:not([disabled]):active {
   background-color: crimson;
 }

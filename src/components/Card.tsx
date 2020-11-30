@@ -66,8 +66,14 @@ export const Component = ({ card }: { card: Card }) => {
             <span className="Card-metric">
               <span>{card.date.day} </span>days
             </span>
-            <button>
+            <button className="primary">
               <span>I did it!</span>
+            </button>
+            <button
+              onClick={() => console.log("Toogle Pinned State for ", card.id)}
+              disabled={card.meta.pinned}
+            >
+              <span>{card.meta.pinned ? "Pinned" : "Pin this"}</span>
             </button>
           </FullWidthWrapper>
         </Article>

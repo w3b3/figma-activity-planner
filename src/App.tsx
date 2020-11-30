@@ -5,12 +5,10 @@ import { Component as CardsGrid } from "./components/CardsGrid";
 import { Component as Footer } from "./components/Footer";
 import { Component as CardDetailsWrapper } from "./components/CardDetailsWrapper";
 
-import { userData } from "./mock-initial-state";
+import { userData as mockUserData } from "./mock-initial-state";
 import { v4 as uuid } from "uuid";
 import firebase from "firebase";
 import "firebase/firestore";
-
-// import "firebase/database";
 import { UserData } from "./types";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -29,14 +27,14 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 // Firebase previously initialized using firebase.initializeApp().
 const db: any = firebase.firestore();
-// const db: any = firebase.database();
+
 // eslint-disable-next-line no-restricted-globals
 if (location.hostname === "localhost") {
   db.useEmulator("localhost", 8080);
 }
 
 export const MyContext = React.createContext({
-  userData,
+  userData: mockUserData,
   updateSelectedCard: console.info,
   selectedCard: "",
 });
@@ -46,10 +44,39 @@ MyContext.displayName = "MyAppState";
 
 function App() {
   const [selectedCard, setSelectedCard] = useState<string>("");
+  const [userData, setUserData] = useState<UserData>(mockUserData);
+  const [firebaseToken, setFirebaseToken] = useState<string>("");
+  const [firebaseUser, setFirebaseUser] = useState<any>(null);
   const handleContextUpdate = (id: string) => {
     setSelectedCard(id);
   };
-  useEffect(() => {
+
+  const authWithGoogle = () => {
+    if (!firebase.auth().currentUser) {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function (result: any) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          setFirebaseToken(result.credential.accessToken);
+          // The signed-in user info.
+          setFirebaseUser(result.user);
+        });
+      // .catch(function (error) {
+      //   // Handle Errors here.
+      //   var errorCode = error.code;
+      //   var errorMessage = error.message;
+      //   // The email of the user's account used.
+      //   var email = error.email;
+      //   // The firebase.auth.AuthCredential type that was used.
+      //   var credential = error.credential;
+      // });
+      // [END signin]
+    }
+  };
+  // Does this MUST be async?
+  const SaveMockDataToFirestore = () => {
     // TEMP: ADD A NEW USERS ON COMPONENT LOAD
     // STEP 1 -  CREATE THE USER INPUT
     const userData: UserData = {
@@ -73,6 +100,29 @@ function App() {
       )
       .catch((error: any) => console.error("Error adding document: ", error));
     return output;
+  };
+
+  // Does this MUST be async
+  const RetrieveMockDataFromFirestore = () => {
+    db.collection("todos")
+      .get()
+      .then((querySnapshot: any) => {
+        querySnapshot.forEach((doc: any) => {
+          console.log(doc.id, doc.data());
+        });
+      });
+  };
+  useEffect(() => {
+    console.log("initial rendering");
+    // SaveMockDataToFirestore();
+    // Auth with Google
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        console.log("USER SIGNED IN", user.uid);
+        setFirebaseUser(user);
+      }
+    });
   }, []);
   return (
     <MyContext.Provider
@@ -84,10 +134,16 @@ function App() {
     >
       {/* Providers can be nested to override values deeper within the tree. */}
       <div className="App">
-        <Header name="Card" />
+        <Header handleAuthentication={authWithGoogle} user={firebaseUser} />
         <CardsGrid />
         <CardDetailsWrapper />
         <Footer />
+        <button onClick={RetrieveMockDataFromFirestore}>
+          <span>Read from Firestore</span>
+        </button>
+        <button onClick={SaveMockDataToFirestore}>
+          <span>Save to Firestore</span>
+        </button>
       </div>
     </MyContext.Provider>
   );
